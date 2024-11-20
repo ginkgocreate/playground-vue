@@ -1,0 +1,39 @@
+// パーシャルとして扱うため、スタイルシートにインポートしてください。
+
+/* 基本色 */
+$primary-color: #37507c;
+$primary-light-color: #3E808A;
+$primary-deep-color: #253652;
+$primary-complementary-color: #c1a576;
+$primary-hovoer-color: #8A483E;
+$secondary-color: #e6e6e6;
+$secondary-complementary-color: #ffffff;
+$secondary-hovoer-color: #FFFFCC;
+
+/* 調整用 */
+$gray-color: #808080;
+$light-gray-color: #d3d3d3;
+$gainsboro-color: #dcdcdc;
+$header-color: #dcdcdc;
+$font-color-white: #fff;
+$error-color: #e74c3c;
+$background-color: #f5f5f5;
+$blue-color: #0000ff;
+
+/* table */
+$table-header-color: #f5f5f5;
+$table-header-color-light: #F4F4F4;
+$table-header-font-color: #696969;
+$table-header-font-size: 16px;
+$table-border-color: #d3d3d3;
+$table-border: solid 1px #d3d3d3;
+
+/* input */
+$input-height: 25px;
+$input-width: 140px;
+$input-width-double: 280px;
+$input-padding: 5px 10px;
+$input-font-size: 15px;
+$input-background-color: #fff;
+$input-border: 1px solid #ddd;
+$input-border-radius: 5px;
