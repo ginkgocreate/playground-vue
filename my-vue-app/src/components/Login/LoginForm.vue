@@ -1,9 +1,8 @@
 <template>
-  <div class="login-container">
-    <h2>ログイン</h2>
-    <form @submit.prevent="login">
+  <div>
+    <div class="title">TRS Web</div>
+      <div class="login-container">
       <div class="form-group">
-        <label for="account">アカウント</label>
         <input
           ref="password"
           id="account"
@@ -12,11 +11,10 @@
           placeholder="アカウントを入力"
           @blur="validateAccount"
         />
-        <p v-if="errorMessage === 'アカウントを入力してください'" class="error">{{ errorMessage }}</p>
+        <p v-if="accountCousionVisible" class="error">{{ 'アカウントは8桁半角数字で入力してください' }}</p>
       </div>
 
       <div class="form-group">
-        <label for="password">パスワード</label>
         <input
           ref="password"
           id="password"
@@ -25,34 +23,40 @@
           placeholder="パスワードを入力"
           @blur="validatePassword"
         />
-        <p v-if="errorMessage === 'パスワードを入力してください'" class="error">{{ errorMessage }}</p>
+        <p v-if="passwordCousionVisible" class="error">{{ 'パスワードは6文字以上入力してください' }}</p>
       </div>
 
-      <div class="form-group">
+      <div class="check-box">
         <label>
-          <input type="checkbox" v-model="saveLoginInfo" /> ログイン情報を保存する
+          <CheckBox v-model="saveLoginInfo" rightText="ログイン情報を記憶する" />
         </label>
       </div>
 
-      <button type="submit" :disabled="isLoading">
+      <button @click="login" :disabled="isLoading">
         {{ isLoading ? 'ログイン中...' : 'ログイン' }}
       </button>
 
       <p v-if="errorMessage && !['アカウントを入力してください', 'パスワードを入力してください'].includes(errorMessage)" class="error">
         {{ errorMessage }}
       </p>
-    </form>
+    </div>
   </div>
 </template>
 
 <script>
-import Cookie from "./Cookie.js"
+import Cookie from "./Cookie.js";
+import CheckBox from "../parts/CheckBox.vue";
 
 export default {
+  components: {
+    CheckBox,
+  },
   data() {
     return {
       account: "",
+      accountCousionVisible: false,
       password: "",
+      passwordCousionVisible: false,
       saveLoginInfo: false,
       cookie: new Cookie(this.$cookies),
       isLoading: false,
@@ -78,16 +82,16 @@ export default {
     },
     validateAccount() {
       if (!this.account || this.account.length < 8 || isNaN(this.account)) {
-        this.errorMessage = "アカウントを入力してください";
+        this.accountCousionVisible = true;
       } else {
-        this.errorMessage = "";
+        this.accountCousionVisible = false;
       }
     },
     validatePassword() {
       if (!this.password || this.password.length < 6) {
-        this.errorMessage = "パスワードを入力してください";
+        this.passwordCousionVisible = true;
       } else {
-        this.errorMessage = "";
+        this.passwordCousionVisible = false;
       }
     },
     async login() {
@@ -146,29 +150,59 @@ export default {
   max-width: 400px;
   margin: 0 auto;
   padding: 20px;
-  border: 1px solid #ddd;
   border-radius: 5px;
-  background: #f9f9f9;
+}
+
+.title{
+  border-bottom:  1px #ddd solid;
+  height: 30px;
+  display: flex;
+  color: #5E83E6;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  width:90%;
+  margin: auto;
 }
 
 .form-group {
   margin-bottom: 15px;
 }
 
+.check-box {
+  display: flex;
+  flex-direction: flex-start;
+  margin: 25px 0 30px 5px;
+}
+
 input {
+  font-size: 18px;
   width: 100%;
-  padding: 10px;
+  height: 40px;
+  padding: 0 3px;
   margin-top: 5px;
   box-sizing: border-box;
+  border-radius: 3px;
+  background: #fff;
+  border: 1px #bbb solid;
+}
+
+input:focus {
+  background-color: white; /* フォーカス時も白にする */
+  box-shadow: none; /* フォーカスの青い枠を無効化 */
 }
 
 button {
+  display: flex;
+  align-items: center; /* 垂直中央揃え */
+  justify-content: center; /* 水平方向中央揃え */
   width: 100%;
-  padding: 10px;
-  background: #007bff;
+  height: 30px;
+  background: #5E83E6;
   color: #fff;
   border: none;
-  border-radius: 5px;
+  border-radius: 15px;
   cursor: pointer;
 }
 
@@ -181,4 +215,5 @@ button:disabled {
   font-size: 12px;
   margin-top: 5px;
 }
+
 </style>
